@@ -41,7 +41,7 @@ class MGCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mg:create {name : Model Name} {{--p|policy}} {{--s|show}}';
+    protected $signature = 'mg:create {name : Model Name} {{--p|policy}} {{--s|show}} {{--m|migration}}';
 
     /**
      * The console command description.
@@ -52,6 +52,7 @@ class MGCommand extends Command
     private $fillable;
     private $needPolicy = false;
     private $needShowPage = false;
+    private $needMigration = false;
 
     /**
      * Create a new command instance.
@@ -87,6 +88,11 @@ class MGCommand extends Command
         if($this->option('show'))
         {
             $this->needShowPage = true;
+        }
+
+        if($this->option('migration'))
+        {
+            $this->needMigration = true;
         }
 
 
@@ -483,9 +489,14 @@ Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
 
         $this->info('Migration Created');
 
-        $this->call('migrate');
+        if($this->needMigration)
+        {
+            $this->call('migrate');
 
-        $this->info('Migration migrated');
+            $this->info('Migration migrated');
+        }
+
+        
 
     }
 
