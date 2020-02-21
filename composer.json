@@ -1,0 +1,26 @@
+{
+    "name": "moulali/laravel-crud",
+    "description": "Create Laravel CRUD files include migration and controller with model fillables",
+    "keywords": ["laravel", "crud", "mgroups"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "M-Groups",
+            "email": "mgroups4444@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "MGroups\\MGcrud\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": ["MGroups\\MGcrud\\MGProvider"]
+        }
+
+    }
+}
