@@ -1,5 +1,5 @@
 {
-    "name": "moulali/laravel-crud",
+    "name": "mgroups/laravel-crud",
     "description": "Create Laravel CRUD files include migration and controller with model fillables",
     "keywords": ["laravel", "crud", "mgroups"],
     "type": "library",
