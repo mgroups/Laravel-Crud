@@ -5,13 +5,8 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6">
-                <?php
-                if(isset($MGVariableModel)){
-                    $a = true;
-                }else {
-                    $a = false;
-                }
-                ?>
+
+                @php $a = isset($MGVariableModel); @endphp
 
                 <div class="card">
                     <div class="card-header h4 text-center">

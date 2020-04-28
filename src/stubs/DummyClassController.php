@@ -86,7 +86,7 @@ class DummyClassController extends Controller
 
         $MGVariableModel->save();
 
-        return view('DummyClass.DummyClass_edit', ["MGVariableModel" => $MGVariableModel]);
+        return view('DummyClass.DummyClass_create', ["MGVariableModel" => $MGVariableModel]);
     }
 
     /**

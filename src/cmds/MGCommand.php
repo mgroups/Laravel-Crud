@@ -41,7 +41,7 @@ class MGCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'mg:create {name : Model Name} {{--p|policy}} {{--s|show}} {{--m|migration}}';
+    protected $signature = 'mg:create {name : Model Name}';
 
     /**
      * The console command description.
@@ -50,7 +50,6 @@ class MGCommand extends Command
      */
     protected $description = 'Laravel CRUD';
     private $fillable;
-    private $needPolicy = false;
     private $needShowPage = false;
     private $needMigration = false;
 
@@ -73,11 +72,24 @@ class MGCommand extends Command
      */
     public function handle()
     {
+
+        //$name = $this->ask('What is your name?');
+
         $name = $this->argument('name');
 
         $modelName = $this->argument('name');
 
-        if($this->option('policy'))
+
+
+/*        if($this->option('migration'))
+        {
+            $this->needMigration = true;
+        }*/
+
+        $this->setFable($modelName);
+
+
+        if ($this->confirm('Do you want Policy?'))
         {
             $this->needPolicy = true;
             $this->call('make:policy', [
@@ -85,26 +97,47 @@ class MGCommand extends Command
             ]);
         }
 
-        if($this->option('show'))
+        if ($this->confirm('Do you want Controller?'))
         {
-            $this->needShowPage = true;
+            $this->createController($modelName);
         }
 
-        if($this->option('migration'))
+        if ($this->confirm('Do you want Migration?'))
         {
-            $this->needMigration = true;
+            if($this->confirm('Need to Migrate?'))
+            {
+                $this->needMigration = true;
+                $this->createMigration($modelName);
+            }else {
+                $this->createMigration($modelName);
+            }
         }
 
+        if ($this->confirm('Add Resource Route?'))
+        {
+            $this->addResourceRoute($modelName);
+        }
 
+        if ($this->confirm('Do you want Views?'))
+        {
 
+            $viewStyle = $this->choice('Select View Style....', ['Normal', 'Horizontal'], 0);
+            // TODO: need folder
+            if($this->confirm('with Show?'))
+            {
+                $this->needShowPage = true;
+                $this->makeViews($modelName, $viewStyle);
+            }else {
+                $this->makeViews($modelName, $viewStyle);
+            }
 
-        $this->setFable($modelName);
-        $this->makeViews($modelName);
-        $this->createController($modelName);
-        $this->createMigration($modelName);
+        }
 
-        $this->addResourceRoute($modelName);
-        $this->addNavLinks($modelName);
+        if ($this->confirm('Need to Add Nav Links to App Layout?'))
+        {
+            $this->addNavLinks($modelName);
+        }
+
     }
 
     /**
@@ -373,9 +406,9 @@ class MGCommand extends Command
         return $model;
     }
 
-    private function makeViews($name)
+    private function makeViews($name, $viewStyle)
     {
-        new MGMakeViews($name, $this->fillable, $this->files, $this->needShowPage);
+        new MGMakeViews($name, $this->fillable, $this->files, $this->needShowPage, $viewStyle);
 
         $this->info('View are created');
     }
@@ -496,7 +529,7 @@ Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
             $this->info('Migration migrated');
         }
 
-        
+
 
     }
 

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container-fluid">
-        @if(count($MGVariableModels) > 0)
+        @if(isset($MGVariableModels))
 
 
 

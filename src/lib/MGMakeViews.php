@@ -14,6 +14,7 @@ class MGMakeViews
    public $name = "";
    public $fillable = [];
    public $needShowFile = false;
+   public $viewStyle = "";
 
     /**
      * The filesystem instance.
@@ -28,12 +29,13 @@ class MGMakeViews
      * @param array $fillable
      * @param Filesystem $files
      */
-    public function __construct(String $name, Array $fillable, Filesystem $files, $needShowFile)
+    public function __construct(String $name, Array $fillable, Filesystem $files, $needShowFile, $viewStyle)
     {
         $this->name = $name;
         $this->fillable = $fillable;
         $this->files = $files;
         $this->needShowFile = $needShowFile;
+        $this->viewStyle = $viewStyle;
 
         $this->createView();
         $this->indexView();
@@ -59,14 +61,31 @@ class MGMakeViews
             $modelKebab = Str::kebab($this->name);
             $modelVar = MGNames::getVarName($this->name);
 
-            $mgInput .= '<div class="form-group row">
-                                            <label for="'.$val.'" class="col-sm-4 col-form-label">'.$val2.'</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @endif required>
-                                            </div>
-                                        </div>
 
-                                        ';
+                if($this->viewStyle == 'Normal')
+                {
+                    $mgInput .= '<div class="form-group">
+                                                <label for="'.$val.'">'.$val2.'</label>
+                                                <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @endif required>
+                                                @error(\''.$val.'\')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            ';
+                }else {
+                    $mgInput .= '<div class="form-group row">
+                                                <label for="'.$val.'" class="col-sm-4 col-form-label">'.$val2.'</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @endif required>
+                                                    @error(\''.$val.'\')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            ';
+                }
 
             }
 
