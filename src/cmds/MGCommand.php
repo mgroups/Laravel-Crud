@@ -1,7 +1,7 @@
 <?php
 
 namespace MGroups\MGcrud\cmds;
-
+// TODO: show successful msg after enter or edit or delete & remove view in index when show is no
 
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -52,6 +52,7 @@ class MGCommand extends Command
     private $fillable;
     private $needShowPage = false;
     private $needMigration = false;
+    private $needPolicy = false;
 
     /**
      * Create a new command instance.
@@ -468,17 +469,31 @@ Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
         } catch (FileNotFoundException $e) {
         }
 
-        $MGCreateLi = '@can(\'create\', App\\'.$class_name.'::class)
+        if($this->needPolicy){
+
+            $MGCreateLi = '@can(\'create\', App\\'.$class_name.'::class)
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/'.$name.'/create">'.$model_title.'</a>
                                 @endcan
                                 {{-- MGENTRIES --}}';
 
-        $MGReportLi = '@can(\'create\', App\\'.$class_name.'::class)
+            $MGReportLi = '@can(\'create\', App\\'.$class_name.'::class)
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/'.$name.'/">'.$model_title.'</a>
                                 @endcan
                                 {{-- MGREPORTS --}}';
+
+        }else
+
+            $MGCreateLi = '<div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/'.$name.'/create">'.$model_title.'</a>
+                                {{-- MGENTRIES --}}';
+
+            $MGReportLi = '<div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/'.$name.'/">'.$model_title.'</a>
+                                {{-- MGREPORTS --}}';{
+
+        }
 
         if(Str::contains($appLayout, $MGCreateLi))
         {

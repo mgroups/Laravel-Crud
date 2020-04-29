@@ -27,7 +27,7 @@
                             @@MGTableData
                             <td class="d-print-none"> <a href="/MGKebabModel/{{ $MGVariableModel->id }}"><button class="btn btn-success">View &nbsp; <i class="fas fa-print"></i></button></a></td>
                             <td class="d-print-none"> <a href="/MGKebabModel/{{ $MGVariableModel->id }}/edit"><button class="btn btn-info">Edit &nbsp; <i class="fas fa-edit"></i></button></a></td>
-                            {{-- <td class="d-print-none"> <a href="/MGKebabModel/{{ $MGVariableModel->id }}/edit"><button class="btn btn-info">Delete &nbsp; <i class="fas fa-trash-alt"></i></button></a></td> --}}
+                            {{-- <td class="d-print-none"> <a href="/MGKebabModel/{{ $MGVariableModel->id }}/edit"><button class="btn btn-danger">Delete &nbsp; <i class="fas fa-trash-alt"></i></button></a></td> --}}
                         </tr>
                     @endforeach
                     </tbody>
