@@ -9,6 +9,7 @@ use Illuminate\Filesystem\Filesystem;
 //use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use MGroups\MGcrud\lib\MGFactory;
 use MGroups\MGcrud\lib\MGMakeViews;
 use MGroups\MGcrud\lib\MGNames;
 use Symfony\Component\Console\Input\InputOption;
@@ -53,6 +54,7 @@ class MGCommand extends Command
     private $needShowPage = false;
     private $needMigration = false;
     private $needPolicy = false;
+    private $needFactory = false;
 
     /**
      * Create a new command instance.
@@ -137,6 +139,11 @@ class MGCommand extends Command
         if ($this->confirm('Need to Add Nav Links to App Layout?'))
         {
             $this->addNavLinks($modelName);
+        }
+
+        if($this->confirm('Need Fake Data..?'))
+        {
+            $this->makeFactory($modelName);
         }
 
     }
@@ -556,6 +563,16 @@ Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
     protected function getDatePrefix()
     {
         return date('Y_m_d_His');
+    }
+
+    public function makeFactory(String $modelName)
+    {
+        $this->needFactory = true;
+        $this->call('make:factory', [
+            'name' => $modelName."Factory", '--model' => $modelName
+        ]);
+
+        new MGFactory($modelName, $this->fillable, $this->files);
     }
 
 
