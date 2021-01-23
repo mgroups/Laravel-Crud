@@ -66,7 +66,7 @@ class MGMakeViews
                 {
                     $mgInput .= '<div class="form-group">
                                                 <label for="'.$val.'">'.$val2.'</label>
-                                                <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @endif required>
+                                                <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old('.$val.') }}" @endif required>
                                                 @error(\''.$val.'\')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -77,7 +77,7 @@ class MGMakeViews
                     $mgInput .= '<div class="form-group row">
                                                 <label for="'.$val.'" class="col-sm-4 col-form-label">'.$val2.'</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @endif required>
+                                                    <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old('.$val.') }}" @endif required>
                                                     @error(\''.$val.'\')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
