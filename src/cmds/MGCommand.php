@@ -351,28 +351,28 @@ class MGCommand extends Command
     {
         $den = "";
         try {
-            $den = $this->files->get(app_path() . "/" . $modelName . ".php");
+            $den = $this->files->get(app_path() . "\\Models\\" . $modelName . ".php");
         } catch (FileNotFoundException $e) {
             $this->error('Model Not Found');
         }
 
         $nco = str_replace('protected $fillable', 'public $fillable', $den);
 
-        $this->files->put(app_path()."/".$modelName.".php", $nco);
+        $this->files->put(app_path()."\\Models\\".$modelName.".php", $nco);
     }
 
     protected function setFablesPrivate($modelName)
     {
         $den = "";
         try {
-            $den = $this->files->get(app_path() . "/" . $modelName . ".php");
+            $den = $this->files->get(app_path() . "\\Models\\" . $modelName . ".php");
         } catch (FileNotFoundException $e) {
             $this->error('Model Not Found');
         }
 
         $nco = str_replace('public $fillable','protected $fillable',  $den);
 
-        $this->files->put(app_path()."/".$modelName.".php", $nco);
+        $this->files->put(app_path()."\\Models\\".$modelName.".php", $nco);
 
     }
 
@@ -408,7 +408,7 @@ class MGCommand extends Command
         $model = trim(str_replace('/', '\\', $model), '\\');
 
         if (! Str::startsWith($model, $rootNamespace = $this->laravel->getNamespace())) {
-            $model = $rootNamespace.$model;
+            $model = $rootNamespace."Models\\".$model;
         }
 
         return $model;
