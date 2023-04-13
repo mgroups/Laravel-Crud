@@ -56,6 +56,9 @@ class MGCommand extends Command
     private $needPolicy = false;
     private $needFactory = false;
 
+    private $currentDir = __DIR__; // Get the current directory path
+    private $parentDir;
+
     /**
      * Create a new command instance.
      *
@@ -65,6 +68,7 @@ class MGCommand extends Command
     {
         parent::__construct();
         $this->files = $files;
+        $parentDir = dirname($this->currentDir); // Get the parent directory path
 
     }
 
@@ -158,9 +162,9 @@ class MGCommand extends Command
     {
         if($arg == 'migration')
         {
-            return __DIR__.'./../stubs/mg_migration.php';
+            return realpath($this->currentDir.'/../stubs/mg_migration.php');
         }
-        return __DIR__.'./../stubs/DummyClassController.php';
+        return realpath($this->currentDir.'/../stubs/DummyClassController.php');
     }
 
     private function createController($name)
@@ -197,7 +201,7 @@ class MGCommand extends Command
             $this->info('Controller created successfully');
 
         } catch (FileNotFoundException $e) {
-            $this->error("File Not Found");
+            $this->error("Controller Error : ". $e->getMessage());
         }
     }
 
@@ -432,7 +436,7 @@ Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
         ";
 
 
-        $check_data = 'Route::resource(\'/' . $modelKebab . "', {$name}Controller::class);";
+        $check_data = 'Route::resource(\'/' . $modelKebab . "', '{$name}Controller');";
 
         $mg_routers = $this->files->get(base_path('routes/web.php'));
 

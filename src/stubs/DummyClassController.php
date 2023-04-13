@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DummyClass;
+use App\Models\DummyClass;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 //MGAuthorImport

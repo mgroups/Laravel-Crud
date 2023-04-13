@@ -16,6 +16,7 @@ class MGMakeViews
    public $needShowFile = false;
    public $viewStyle = "";
 
+    private $currentDir = __DIR__; // Get the current directory path
     /**
      * The filesystem instance.
      *
@@ -64,9 +65,9 @@ class MGMakeViews
 
                 if($this->viewStyle == 'Normal')
                 {
-                    $mgInput .= '<div class="form-group">
-                                                <label for="'.$val.'">'.$val2.'</label>
-                                                <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old("'.$val.'") }}" @endif required>
+                    $mgInput .= '<div class="mb-3">
+                                                <label for="'.$val.'" class="form-label">'.$val2.'</label>
+                                                <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old(\''.$val.'\') }}" @endif required>
                                                 @error(\''.$val.'\')
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -77,7 +78,7 @@ class MGMakeViews
                     $mgInput .= '<div class="form-group row">
                                                 <label for="'.$val.'" class="col-sm-4 col-form-label">'.$val2.'</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old("'.$val.'") }}" @endif required>
+                                                    <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old('.$val.') }}" @endif required>
                                                     @error(\''.$val.'\')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -159,11 +160,11 @@ class MGMakeViews
     {
        if($view == 'create')
        {
-           return __DIR__ . './../stubs/mgViews/single.create.blade.php';
+           return realpath($this->currentDir . '/../stubs/mgViews/single.create.blade.php');
        }
        else if($view == 'index')
        {
-           return __DIR__ . './../stubs/mgViews/index.blade.php';
+           return realpath($this->currentDir . '/../stubs/mgViews/index.blade.php');
        }
 
        return NULL;
