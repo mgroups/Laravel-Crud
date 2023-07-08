@@ -42,11 +42,13 @@ class DummyClassController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required',
+            //'title' => 'required',
         ]);
 
         DummyClass::create($request->all());
-        return view('DummyClass.DummyClass_create');
+
+        return redirect('/MGVariableModel');
+        //return view('DummyClass.DummyClass_create');
     }
 
     /**
