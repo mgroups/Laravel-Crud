@@ -432,7 +432,7 @@ class MGCommand extends Command
         $modelKebab = Str::kebab($name);
 
         $insert_data =   '
-Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
+Route::resource(\'/' . $modelKebab . "', {$name}Controller::class);
         ";
 
 
