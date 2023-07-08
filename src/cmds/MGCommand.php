@@ -436,7 +436,7 @@ Route::resource(\'/' . $modelKebab . "', '{$name}Controller');
         ";
 
 
-        $check_data = 'Route::resource(\'/' . $modelKebab . "', '{$name}Controller');";
+        $check_data = 'Route::resource(\'/' . $modelKebab . "', {$name}Controller::class);";
 
         $mg_routers = $this->files->get(base_path('routes/web.php'));
 
