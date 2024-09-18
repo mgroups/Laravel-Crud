@@ -65,15 +65,10 @@ class MGMakeViews
 
                 if($this->viewStyle == 'Normal')
                 {
-                    $mgInput .= '<div class="mb-3">
-                                                <label for="'.$val.'" class="form-label">'.$val2.'</label>
-                                                <input type="text" class="form-control @error(\''.$val.'\') is-invalid @enderror" id="'.$val.'" name="'.$val.'" placeholder="'.$val2.'" @if($a) value="{{$'.$modelVar.'->'.$val.'}}" @else value="{{ old(\''.$val.'\') }}" @endif required>
-                                                @error(\''.$val.'\')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
 
-                                            ';
+                    $mgInput .= '<x-forms.input name="'.$val2.'" inputId="'.$val.'" :inputVal=" $a ? '.$modelVar.'->'.$val.' : \'\' " required  />;
+                    ';
+                    
                 }else {
                     $mgInput .= '<div class="form-group row">
                                                 <label for="'.$val.'" class="col-sm-4 col-form-label">'.$val2.'</label>
